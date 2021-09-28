@@ -6,7 +6,7 @@ from keywords.defaultKeywords import KeywordFailed
 
 try:
     default = keywords.defaultKeywords.DefaultKeywords()
-    default.openBrowser()
+    default.openBrowser(headless=True)
     default.openUrl("https://www.admin.ch")
     # element, selector = default.selectElement("link_text=Viola Amherd")
     # default.isVisible(element)

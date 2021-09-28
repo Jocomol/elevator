@@ -55,8 +55,11 @@ class DefaultKeywords:
 
     browser = None
 
-    def openBrowser(self):
-        self.browser = webdriver.Firefox()
+    def openBrowser(self, headless=False):
+        fireFoxOptions = webdriver.FirefoxOptions()
+        if headless:
+            fireFoxOptions.set_headless()
+        self.browser = webdriver.Firefox(firefox_options=fireFoxOptions)
 
     def openUrl(self, url):
         if self.browser is not None:
