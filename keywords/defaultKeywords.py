@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python selectorValue,3
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import time
@@ -47,12 +47,12 @@ class ElementNotVisible(KeywordFailed):
 
 
 class TextNotMatching(KeywordFailed):
-    def __init__(self, element, selector, expectedText, actualText):
-        super().__init__("element: \"" + element + "\" with selector: \"" + selector + "\" doesn't have the expected text: \"" + expectedText + "\" but the text: \"" + actualText + "\".")
+    def __init__(self, selector, selectorValue, expectedText, actualText):
+        super().__init__("element: \"" + selectorValue + "\" with selector: \"" + selector + "\" doesn't have the expected text: \"" + expectedText + "\" but the text: \"" + actualText + "\".")
 
 
 class DefaultKeywords:
-
+    
     browser = None
 
     def openBrowser(self, headless=False):
@@ -123,7 +123,7 @@ class DefaultKeywords:
     def checkText(self, selector, selectorValue, expectedText):
         element, selectorValue, selector = self.selectElement(selector, selectorValue)
         if element.text != expectedText:
-            raise TextNotMatching(self, element, selectorValue, expectedText, element.text)
+            raise TextNotMatching(selector, selectorValue, expectedText, element.text)
     
     def getSource(self):
         print(self.browser.page_source)
