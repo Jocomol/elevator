@@ -70,9 +70,7 @@ class DefaultKeywords:
     def closeBrowser(self):
         self.browser.close()
 
-    def selectElement(self, selector):
-        selectorValue = selector.split("=")[1]
-        selector = selector.split("=")[0]
+    def selectElement(self, selector, selectorValue):
         element = None
         try:
             if selector == "id":
@@ -89,21 +87,26 @@ class DefaultKeywords:
                 element = self.browser.find_element_by_class_name(selectorValue)
             elif selector == "css_selector":
                 element = self.browser.find_element_by_css_selector(selectorValue)
-            elif selector == "tag":
-                element = self.browser.find_element_by_tag(selectorValue)
+            else:
+                elements = self.browser.find_elements_by_tag_name(selector)
+                for potentialElement in elements:
+                    if potentialElement.text == selectorValue:
+                        element = potentialElement
         except NoSuchElementException:
             raise ElementNotFound(selectorValue, selector)
         else:
+            if element is None:
+                raise ElementNotFound(selectorValue, selector)
             return element, selectorValue, selector
 
-    def findAndClickElement(self, selector):
-        self.selectElement(selector)[0].click()
+    def findAndClickElement(self, selector, selectorValue):
+        self.selectElement(selector, selectorValue)[0].click()
 
     def clickElement(self, element):
         element.click()
 
-    def findAndCheckIfVisible(self, selector):
-        element, selectorValue, selector = self.selectElement(selector)
+    def findAndCheckIfVisible(self, selector, selectorValue):
+        element, selectorValue, selector = self.selectElement(selector, selectorValue)
         if not element.is_displayed():
             raise ElementFoundButNotVisible(selectorValue, selector)
 
@@ -111,16 +114,19 @@ class DefaultKeywords:
         if not element.is_displayed():
             raise ElementNotVisible(element.text)
 
-    def findAndGetText(self, selector):
-        return self.selectElement(selector)[0].text
+    def findAndGetText(self, selector, selectorValue):
+        return self.selectElement(selector, selectValue)[0].text
 
     def getText(self, element):
         return element.text
 
-    def checkText(self, selector, expectedText):
-        element, selectorValue, selector = self.selectElement(selector)
+    def checkText(self, selector, selectorValue, expectedText):
+        element, selectorValue, selector = self.selectElement(selector, selectorValue)
         if element.text != expectedText:
             raise TextNotMatching(self, element, selectorValue, expectedText, element.text)
+    
+    def getSource(self):
+        print(self.browser.page_source)
 
     def sleep(self, seconds):
         time.sleep(seconds)

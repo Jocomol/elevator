@@ -8,13 +8,12 @@ try:
     default = keywords.defaultKeywords.DefaultKeywords()
     default.openBrowser(headless=True)
     default.openUrl("https://www.admin.ch")
-    # element, selector = default.selectElement("link_text=Viola Amherd")
-    # default.isVisible(element)
-    # default.clickElement(element)
-    default.findAndCheckIfVisible("link_text=Viola Amherd")
-    default.findAndClickElement("link_text=Viola Amherd")
+    default.findAndCheckIfVisible("link_text", "Viola Amherd")
+    default.findAndClickElement("link_text", "Viola Amherd")
+    default.findAndCheckIfVisible("h1", "Das Eidgenössische Departement für Verteidigung, Bevölkerungsschutz und Sport (VBS)")
+    default.findAndCheckIfVisible("h2", "Wahl in den Bundesrat")
+    default.checkText("id", "social_share", "Social share")
     print("SUCCESS")
-
 except KeywordFailed:
     print("FAILED")
     traceback.print_exc()
