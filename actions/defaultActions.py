@@ -1,4 +1,4 @@
-#!/usr/bin/python selectorValue,3
+#!/usr/bin/python3 -B
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import time
