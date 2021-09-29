@@ -4,7 +4,7 @@ import story.story as story
 
 class Story(story.superStory):
 
-    def executeKeywords(self):
+    def executeActions(self):
         default = self.default
         default.openBrowser(headless=True)
         self.setName("admin.ch-001")

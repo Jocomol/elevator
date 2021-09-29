@@ -4,54 +4,54 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 
-class KeywordFailed(Exception):
+class ActionFailed(Exception):
 
     def __init__(self, message):
         self.message = message
         super().__init__(self.message)
 
 
-class UrlNotOpenedError(KeywordFailed):
+class UrlNotOpenedError(ActionFailed):
 
     def __init__(self, error, message="Url wasn't opened"):
         self.message = message
         super().__init__(self.message + error)
 
 
-class BrowserNotRunning(KeywordFailed):
+class BrowserNotRunning(ActionFailed):
 
     def __init__(self, message="Browser is not running"):
         super().__init__(message)
 
 
-class ElementNotFound(KeywordFailed):
+class ElementNotFound(ActionFailed):
 
     def __init__(self, element, selector):
         super().__init__("element: \"" + element + "\" with selector: \"" + selector + "\" was not found")
 
 
-class InvalidArgument(KeywordFailed):
+class InvalidArgument(ActionFailed):
 
     def __init__(self, argument):
         super().__init__("argument: " + argument + " is invalid, please refer to the documentation")
 
 
-class ElementFoundButNotVisible(KeywordFailed):
+class ElementFoundButNotVisible(ActionFailed):
     def __init__(self, element, selector):
         super().__init__("element: \"" + element + "\" with selector: \"" + selector + "\" is not visible")
 
 
-class ElementNotVisible(KeywordFailed):
+class ElementNotVisible(ActionFailed):
     def __init__(self, element):
         super().__init__("element: \"" + element + "\" is not visible")
 
 
-class TextNotMatching(KeywordFailed):
+class TextNotMatching(ActionFailed):
     def __init__(self, selector, selectorValue, expectedText, actualText):
         super().__init__("element: \"" + selectorValue + "\" with selector: \"" + selector + "\" doesn't have the expected text: \"" + expectedText + "\" but the text: \"" + actualText + "\".")
 
 
-class DefaultKeywords:
+class DefaultActions:
 
     browser = None
 
