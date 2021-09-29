@@ -5,7 +5,7 @@ import colorful
 import keywords.defaultKeywords
 
 
-class superPlan:
+class superStory:
 
     def __init__(self):
         self.default = keywords.defaultKeywords.DefaultKeywords()
@@ -14,22 +14,22 @@ class superPlan:
         exitCode = 2
         try:
             self.executeKeywords()
-            print(self.planName + ": " + colorful.green("SUCCESS"))
+            print(self.storyName+ ": " + colorful.green("SUCCESS"))
             exitCode = 0
         except KeywordFailed as e:
-            print(self.planName + ": " + colorful.red("FAILED") + "\n" + str(e))
+            print(self.storyName + ": " + colorful.red("FAILED") + "\n" + str(e))
             exitCode = 1
             self.default.closeBrowser()
         except Exception:
-            print(self.planName + ": " + colorful.black("ERROR"))
+            print(self.storyName + ": " + colorful.black("ERROR"))
             traceback.print_exc()
             self.default.closeBrowser()
         finally:
             return exitCode
 
     def executeKeywords(self):
-        print("WARNING: Empty Plan")
+        print("WARNING: Empty Story")
         pass
 
     def setName(self, name):
-        self.planName = name
+        self.storyName = name

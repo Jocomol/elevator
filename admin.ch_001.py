@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import plan.plan as plan
+import story.story as story
 
 
-class Plan(plan.superPlan):
+class Story(story.superStory):
 
     def executeKeywords(self):
         default = self.default
@@ -17,4 +17,4 @@ class Plan(plan.superPlan):
         default.closeBrowser()
 
 
-Plan().test()
+Story().test()

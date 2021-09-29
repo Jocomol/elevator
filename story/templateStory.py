@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import plan.plan as plan
+import story.story as story
 
 
-class Plan(plan.superPlan):
+class Story(story.superStory):
 
     def executeKeywords(self):
         default = self.default  # not nessecary but very useful if you don't want to write self.default.keyword everytime when using a default keyword
@@ -11,4 +11,4 @@ class Plan(plan.superPlan):
         default.closeBrowser()  # close the browser at the end of the successful execution
 
 
-Plan().test()
+Story().test()
