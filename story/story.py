@@ -14,7 +14,7 @@ class superStory:
         exitCode = 2
         try:
             self.executeActions()
-            print(self.storyName+ ": " + colorful.green("SUCCESS"))
+            print(self.storyName + ": " + colorful.green("SUCCESS"))
             exitCode = 0
         except ActionFailed as e:
             print(self.storyName + ": " + colorful.red("FAILED") + "\n" + str(e))
