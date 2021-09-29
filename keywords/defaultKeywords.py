@@ -52,7 +52,7 @@ class TextNotMatching(KeywordFailed):
 
 
 class DefaultKeywords:
-    
+
     browser = None
 
     def openBrowser(self, headless=False):
@@ -115,7 +115,7 @@ class DefaultKeywords:
             raise ElementNotVisible(element.text)
 
     def findAndGetText(self, selector, selectorValue):
-        return self.selectElement(selector, selectValue)[0].text
+        return self.selectElement(selector, selectorValue)[0].text
 
     def getText(self, element):
         return element.text
@@ -124,7 +124,7 @@ class DefaultKeywords:
         element, selectorValue, selector = self.selectElement(selector, selectorValue)
         if element.text != expectedText:
             raise TextNotMatching(selector, selectorValue, expectedText, element.text)
-    
+
     def getSource(self):
         print(self.browser.page_source)
 

@@ -1,19 +1,14 @@
 #!/usr/bin/python3
-import keywords.defaultKeywords
-import plan.plan
-from keywords.defaultKeywords import KeywordFailed
+import plan.plan as plan
 
-class Plan(plan.plan.superPlan):
-    
+
+class Plan(plan.superPlan):
+
     def executeKeywords(self):
-        default = keywords.defaultKeywords.DefaultKeywords()
-        default.openBrowser(headless=True)
-        default.openUrl("")
-        default.closeBrowser()
+        default = self.default  # not nessecary but very useful if you don't want to write self.default.keyword everytime when using a default keyword
+        default.openBrowser(headless=True)  # start and configure browser
+        self.setName("")  # set a name for distinction in the output
+        default.closeBrowser()  # close the browser at the end of the successful execution
 
-    def __init__(self):
-        super().__init__()
-        self.setName("planname")
-if __name__ == "__main__":
-    plan = Plan()
-    plan.test()
+
+Plan().test()
