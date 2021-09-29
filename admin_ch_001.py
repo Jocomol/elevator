@@ -20,5 +20,4 @@ class Plan(plan.plan.superPlan):
         super().__init__()
         self.setName("admin.ch-001")
 if __name__ == "__main__":
-    plan = Plan()
-    plan.test()
+    Plan().test()
