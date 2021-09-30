@@ -9,7 +9,7 @@ class Story(story.superStory):
         default.openBrowser(headless=True)
         self.setName("admin.ch-002")
         default.openUrl("https://www.admin.ch")
-        default.findAndCheckIfVisible("link_text", "Violad Amherd")
+        default.findAndCheckIfVisible("link_text", "Viola Amherd")
         default.findAndClickElement("link_text", "Viola Amherd")
         default.findAndCheckIfVisible("h1", "Das Eidgenössische Departement für Verteidigung, Bevölkerungsschutz und Sport (VBS)")
         default.findAndCheckIfVisible("h2", "Wahl in den Bundesrat")

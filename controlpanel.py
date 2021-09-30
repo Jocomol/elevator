@@ -7,7 +7,7 @@ from os import listdir
 
 parser = argparse.ArgumentParser(description="WIP")
 parser.add_argument("-S", "--shabbat", help="Shabbat mode, do all stories automatically", default=False, action="store_true")
-parser.add_argument("-r", "--redo", help="redo failed stories", default=False, action="store_true")  # add function
+parser.add_argument("-r", "--redo", help="redo failed stories", default=False, action="store_true")
 parser.add_argument("-s", "--stories", type=str, nargs="+", help="Path do to be executed stories", default="")
 
 
@@ -35,20 +35,28 @@ def loadStories(paths):
 def main():
     failedStories = []
     args = parser.parse_args()
+    stories = []
     if args.shabbat:
         stories = loadStories(listdir("."))
+    elif args.redo:
+        with open("/tmp/failedStories", "r") as f:
+            for story in f.read().split(";"):
+                stories.append(story)
     else:
         stories = loadStories(args.stories)
-    for story in stories:  # TODO sort for orderly execution
+    for story in stories:
         try:
-            story = story.strip(".").split(".")[0].replace("/", ".").strip(".")
-            exitCode = locate(story + ".Story")().test()
+            story_class = story.strip(".").split(".")[0].replace("/", ".").strip(".")
+            exitCode = locate(story_class + ".Story")().test()
             if exitCode > 0:
                 failedStories.append(story)
         except TypeError:
             pass
+    FAILED_STORIES = ""
     for story in failedStories:
-        print(story)  # TODO Add to env variable
+        FAILED_STORIES += story + ";"
+    with open("/tmp/failedStories", "w") as f:
+        f.write(FAILED_STORIES)
 
 
 if __name__ == "__main__":
