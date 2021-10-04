@@ -1,8 +1,10 @@
 #!/usr/bin/python3 -B
 from pydoc import locate
 import argparse
-from os.path import isfile, join, isdir
+from os.path import isfile, join, isdir, abspath
 from os import listdir
+import sys
+import importlib
 
 
 parser = argparse.ArgumentParser(description="WIP")
@@ -45,13 +47,15 @@ def main():
     else:
         stories = loadStories(args.stories)
     for story in stories:
-        try:
-            story_class = story.strip(".").split(".")[0].replace("/", ".").strip(".")
-            exitCode = locate(story_class + ".Story")().test()
-            if exitCode > 0:
-                failedStories.append(story)
-        except TypeError:
-            pass
+        story_dir = abspath(story).strip("/" + story)
+        sys.path.append(story_dir)
+        story_class_file = abspath(story).split("/")[len(abspath(story).split("/")) - 1]
+        story_class = importlib.import_module(story_class_file)
+        story_object = story_class.Story()
+        exitCode = story_object.test()
+        if exitCode > 0:
+            failedStories.append(story)
+
     FAILED_STORIES = ""
     for story in failedStories:
         FAILED_STORIES += story + ";"
