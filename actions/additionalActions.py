@@ -1,5 +1,4 @@
 #!/usr/bin/python3 -B
-import actions.defaultActions
 
 
 class AdditionalActions:
@@ -9,4 +8,3 @@ class AdditionalActions:
     def __init__(self, browser, default):
         self.browser = browser
         self.default = default
-

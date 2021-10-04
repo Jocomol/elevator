@@ -1,0 +1,9 @@
+#!/usr/bin/python3 -B
+import actions.defaultActions
+import actions.additionalActions
+
+
+class TemplateActions(actions.additionalActions.AdditionalActions):
+
+    def __init__(self, browser, default):
+        super().__init__(browser, default)
