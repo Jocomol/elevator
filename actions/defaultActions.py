@@ -124,6 +124,10 @@ class DefaultActions:
         element, selectorValue, selector = self.selectElement(selector, selectorValue)
         if element.text != expectedText:
             raise TextNotMatching(selector, selectorValue, expectedText, element.text)
+    
+    def write(self, selector, selectorValue, text):
+        element, selectorValue, selector = self.selectElement(selector, selectorValue)
+        element.send_keys(text)
 
     def getSource(self):
         print(self.browser.page_source)
