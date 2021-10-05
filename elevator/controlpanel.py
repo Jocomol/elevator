@@ -47,9 +47,10 @@ def main():
     else:
         stories = loadStories(args.stories)
     for story in stories:
-        story_dir = abspath(story).strip("/" + story)
-        sys.path.append(story_dir)
         story_class_file = abspath(story).split("/")[len(abspath(story).split("/")) - 1]
+        lenght = len(story_class_file)
+        story_dir = abspath(story)[:-lenght]
+        sys.path.append(story_dir)
         story_class = importlib.import_module(story_class_file)  # FIXME
         story_object = story_class.Story()
         exitCode = story_object.test()
