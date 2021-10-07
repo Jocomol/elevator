@@ -6,7 +6,7 @@ class AdditionalActions:
 
     browser = None
 
-    def __init__(self, browser, default, path = None, password = None):
+    def __init__(self, browser, default, path=None, password=None):
         self.browser = browser
         self.default = default
         if password and path:
