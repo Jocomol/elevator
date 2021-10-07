@@ -1,5 +1,4 @@
 #!/usr/bin/python3 -B
-from pydoc import locate
 import argparse
 from os.path import isfile, join, isdir, abspath
 from os import listdir
