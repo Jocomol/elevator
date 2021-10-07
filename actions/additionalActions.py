@@ -15,5 +15,8 @@ class AdditionalActions:
     def loadPasswords(self, path, password):
         self.kp = PyKeePass(path, password=password)
 
+    def getUsername(self, title):
+        return self.kp.find_entries(title=title, first=True).username
+
     def getPassword(self, title):
         return self.kp.find_entries(title=title, first=True).password
