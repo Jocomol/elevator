@@ -140,3 +140,5 @@ cython_debug/
 
 # Project specific
 geckodriver.log
+test_database.kdbx
+testing/
