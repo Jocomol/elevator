@@ -1,8 +1,8 @@
 #!/usr/bin/python3 -B
 import traceback
-from actions.defaultActions import ActionFailed
+from elevator.actions.defaultActions import ActionFailed
 import colorful
-import actions.defaultActions
+import elevator.actions.defaultActions
 
 
 class superStory:

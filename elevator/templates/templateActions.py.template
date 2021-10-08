@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -B
-import actions.defaultActions
-import actions.additionalActions
+import elevator.actions.defaultActions
+import elevator.actions.additionalActions
 
 
 class TemplateActions(actions.additionalActions.AdditionalActions):
