@@ -3,6 +3,8 @@ import traceback
 from elevator.actions.defaultActions import ActionFailed
 import colorful
 import elevator.actions.defaultActions
+from importlib.machinery import SourceFileLoader
+from os.path import abspath
 
 
 class superStory:
@@ -33,3 +35,12 @@ class superStory:
 
     def setName(self, name):
         self.storyName = name
+
+    def loadActions(self, path):
+        print("load")
+        path = abspath(path)
+        print(path)
+        actionsClass = SourceFileLoader("actionModule", abspath(path)).load_module().Actions
+        print(actionsClass)
+        return actionsClass
+
