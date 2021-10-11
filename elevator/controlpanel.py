@@ -1,8 +1,8 @@
 #!/usr/bin/python3 -B
-from pydoc import locate
 import argparse
-from os.path import isfile, join, isdir
+from os.path import isfile, join, isdir, abspath
 from os import listdir
+from importlib.machinery import SourceFileLoader
 
 
 parser = argparse.ArgumentParser(description="WIP")
@@ -45,13 +45,10 @@ def main():
     else:
         stories = loadStories(args.stories)
     for story in stories:
-        try:
-            story_class = story.strip(".").split(".")[0].replace("/", ".").strip(".")
-            exitCode = locate(story_class + ".Story")().test()
-            if exitCode > 0:
-                failedStories.append(story)
-        except TypeError:
-            pass
+        exitCode = SourceFileLoader("storyModule", abspath(story)).load_module().Story().test()
+        if exitCode > 0:
+            failedStories.append(story)
+
     FAILED_STORIES = ""
     for story in failedStories:
         FAILED_STORIES += story + ";"

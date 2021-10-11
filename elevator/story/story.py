@@ -1,14 +1,16 @@
 #!/usr/bin/python3 -B
 import traceback
-from actions.defaultActions import ActionFailed
+from elevator.actions.defaultActions import ActionFailed
 import colorful
-import actions.defaultActions
+import elevator.actions.defaultActions
+from importlib.machinery import SourceFileLoader
+from os.path import abspath
 
 
 class superStory:
 
     def __init__(self):
-        self.default = actions.defaultActions.DefaultActions()
+        self.default = elevator.actions.defaultActions.DefaultActions()
 
     def test(self):
         exitCode = 2
@@ -33,3 +35,12 @@ class superStory:
 
     def setName(self, name):
         self.storyName = name
+
+    def loadActions(self, path):
+        print("load")
+        path = abspath(path)
+        print(path)
+        actionsClass = SourceFileLoader("actionModule", abspath(path)).load_module().Actions
+        print(actionsClass)
+        return actionsClass
+
