@@ -7,5 +7,7 @@ class Story(story.superStory):
     def executeActions(self):
         default = self.default  # not nessecary but very useful if you don't want to write self.default.action everytime when using a default action
         default.openBrowser(headless=True)  # start and configure browser
+        additionalKeywords = self.loadActions("/path/to/pythonfile")(browser, default, "keyfile_path", "keyfile_password") # Load keywords
+        additionalKeywors.login("name of entry") # login into website
         self.setName("")  # set a name for distinction in the output
         default.closeBrowser()  # close the browser at the end of the successful execution

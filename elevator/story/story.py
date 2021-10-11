@@ -37,10 +37,6 @@ class superStory:
         self.storyName = name
 
     def loadActions(self, path):
-        print("load")
         path = abspath(path)
-        print(path)
         actionsClass = SourceFileLoader("actionModule", abspath(path)).load_module().Actions
-        print(actionsClass)
         return actionsClass
-
