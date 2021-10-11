@@ -5,5 +5,5 @@ import elevator.actions.additionalActions
 
 class TemplateActions(actions.additionalActions.AdditionalActions):
 
-    def __init__(self, browser, default):
-        super().__init__(browser, default)
+    def __init__(self, browser, default, path = None, password = None):
+        super().__init__(browser, default, path, password)
