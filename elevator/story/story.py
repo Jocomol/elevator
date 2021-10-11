@@ -8,7 +8,7 @@ import elevator.actions.defaultActions
 class superStory:
 
     def __init__(self):
-        self.default = actions.defaultActions.DefaultActions()
+        self.default = elevator.actions.defaultActions.DefaultActions()
 
     def test(self):
         exitCode = 2

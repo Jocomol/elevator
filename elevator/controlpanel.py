@@ -1,8 +1,8 @@
 #!/usr/bin/python3 -B
 import argparse
-from os.path import isfile, join, isdir
+from os.path import isfile, join, isdir, abspath
 from os import listdir
-import importlib.util as importer
+from importlib.machinery import SourceFileLoader
 
 
 parser = argparse.ArgumentParser(description="WIP")
@@ -45,9 +45,7 @@ def main():
     else:
         stories = loadStories(args.stories)
     for story in stories:
-        storyFile = importer.spec_from_file_location("storyFile", story)
-        storyClass = importer.module_from_spec(storyFile)
-        exitCode = storyFile.loader.exec_module(storyClass)
+        exitCode = SourceFileLoader("storyModule", abspath(story)).load_module().Story().test()
         if exitCode > 0:
             failedStories.append(story)
 
