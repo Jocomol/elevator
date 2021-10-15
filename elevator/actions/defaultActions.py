@@ -1,5 +1,6 @@
 #!/usr/bin/python3 -B
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 import time
 
@@ -56,10 +57,9 @@ class DefaultActions:
     browser = None
 
     def openBrowser(self, headless=False):
-        fireFoxOptions = webdriver.FirefoxOptions()
-        if headless:
-            fireFoxOptions.set_headless()
-        self.browser = webdriver.Firefox(firefox_options=fireFoxOptions)
+        options = Options()
+        options.headless = headless
+        self.browser = webdriver.Firefox(options=options)
 
     def openUrl(self, url):
         if self.browser is not None:

@@ -6,8 +6,8 @@ from importlib.machinery import SourceFileLoader
 
 
 parser = argparse.ArgumentParser(description="WIP")
-parser.add_argument("-S", "--shabbat", help="Shabbat mode, do all stories automatically", default=False, action="store_true")
 parser.add_argument("-r", "--redo", help="redo failed stories", default=False, action="store_true")
+parser.add_argument("-S", "--shabbat", help="Shabbat mode; executes all stories", default=False, action="store_true")
 parser.add_argument("-s", "--stories", type=str, nargs="+", help="Path do to be executed stories", default="")
 
 
@@ -16,10 +16,8 @@ def loadStories(paths):
     story_paths = []
     for path in paths:
         if isdir(path):
-            for item in listdir(path):
-                filePath = join(path, item)
-                if isfile(filePath):
-                    story_paths.append(filePath)
+            for story in loadDirectory(path):
+                story_paths.append(story)
         elif isfile(path):
             story_paths.append(path)
     for path in story_paths:
@@ -31,6 +29,16 @@ def loadStories(paths):
             cleaned_stories.remove(story)
     return cleaned_stories
 
+def loadDirectory(directory):
+    story_paths = []
+    for item in listdir(directory):
+        filePath = join(directory, item)
+        if isfile(filePath):
+            story_paths.append(filePath)
+        elif isdir(filePath):
+            for story in loadDirectory(filePath):
+                story_paths.append(story)
+    return story_paths
 
 def main():
     failedStories = []
@@ -45,7 +53,11 @@ def main():
     else:
         stories = loadStories(args.stories)
     for story in stories:
-        exitCode = SourceFileLoader("storyModule", abspath(story)).load_module().Story().test()
+        exitCode = 2
+        try:
+            exitCode = SourceFileLoader("storyModule", abspath(story)).load_module().Story().test()
+        except AttributeError:
+            pass
         if exitCode > 0:
             failedStories.append(story)
 
@@ -56,5 +68,4 @@ def main():
         f.write(FAILED_STORIES)
 
 
-if __name__ == "__main__":
-    main()
+main()
