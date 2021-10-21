@@ -56,9 +56,11 @@ class DefaultActions:
 
     browser = None
 
-    def openBrowser(self, headless=False):
+    def openBrowser(self, headless=False, binaryPath=""):
         options = Options()
         options.headless = headless
+        if binaryPath != "":
+            options.binary = binaryPath
         self.browser = webdriver.Firefox(options=options)
 
     def openUrl(self, url):
