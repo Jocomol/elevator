@@ -1,6 +1,7 @@
 #i!/usr/bin/python3 -B
 from pykeepass import PyKeePass
 from os import popen
+import logging
 
 class AdditionalActions:
 
@@ -17,7 +18,9 @@ class AdditionalActions:
         return PyKeePass(path, password=password)
 
     def getUsername(self, title):
-        return self.kp.find_entries(title=title, first=True).username
+        username = self.kp.find_entries(title=title, first=True).username
+        logging.debug("Loaded: " + username)
+        return username
 
     def getPassword(self, title):
         return self.kp.find_entries(title=title, first=True).password

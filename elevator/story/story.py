@@ -5,6 +5,7 @@ import colorful
 import elevator.actions.defaultActions
 from importlib.machinery import SourceFileLoader
 from os.path import abspath
+import logging
 
 
 class superStory:
@@ -16,22 +17,21 @@ class superStory:
         exitCode = 2
         try:
             self.executeActions()
+            logging.info(self.storyName + ": " + colorful.green("SUCCESS"))
             print(self.storyName + ": " + colorful.green("SUCCESS"))
             exitCode = 0
         except ActionFailed as e:
-            print(self.storyName + ": " + colorful.red("FAILED") + "\n" + str(e))
+            logging.error(self.storyName + ": " + colorful.red("FAILED") + "\n" + str(e))
             exitCode = 1
             self.default.closeBrowser()
         except Exception:
-            print(self.storyName + ": " + colorful.black("ERROR"))
-            traceback.print_exc()
+            logging.exception(self.storyName + ": " + colorful.black("ERROR"))
             self.default.closeBrowser()
         finally:
             return exitCode
 
     def executeActions(self):
-        print("WARNING: Empty Story")
-        pass
+        logging.warning("Empty Story")
 
     def setName(self, name):
         self.storyName = name
@@ -39,4 +39,5 @@ class superStory:
     def loadActions(self, path):
         path = abspath(path)
         actionsClass = SourceFileLoader("actionModule", abspath(path)).load_module().Actions
+        logging.info("Module at: " + path +  " was loaded")
         return actionsClass
