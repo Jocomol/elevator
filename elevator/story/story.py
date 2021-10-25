@@ -16,6 +16,7 @@ class superStory:
     def test(self):
         exitCode = 2
         try:
+            logging.debug("Starting execution")
             self.executeActions()
             logging.info(self.storyName + ": " + colorful.green("SUCCESS"))
             print(self.storyName + ": " + colorful.green("SUCCESS"))
