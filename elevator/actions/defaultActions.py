@@ -60,9 +60,12 @@ class DefaultActions:
     def openBrowser(self, headless=False, binaryPath=""):
         options = Options()
         options.headless = headless
+        logging.debug("Headless set to: " + str(headless))
         if binaryPath != "":
             options.binary = binaryPath
+            logging.debug("Binary path set to: " + binaryPath)
         self.browser = webdriver.Firefox(options=options)
+        logging.debug("Webdriver created: " + str(self.browser))
 
     def openUrl(self, url):
         if self.browser is not None:
