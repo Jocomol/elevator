@@ -39,6 +39,9 @@ class superStory:
 
     def loadActions(self, path):
         path = abspath(path)
-        actionsClass = SourceFileLoader("actionModule", abspath(path)).load_module().Actions
+        try:
+            actionsClass = SourceFileLoader("actionModule", abspath(path)).load_module().Actions
+        except Exception:
+            logging.exception("Actions at " + path + " weren't able to be loaded.")
         logging.info("Module at: " + path +  " was loaded")
         return actionsClass
