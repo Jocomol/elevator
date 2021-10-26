@@ -142,3 +142,4 @@ cython_debug/
 geckodriver.log
 test_database.kdbx
 testing/
+build.sh

@@ -69,9 +69,8 @@ def main():
             logging.info("Started:" + story)
             storyObject = SourceFileLoader("storyModule", abspath(story)).load_module().Story()
             exitCode = storyObject.test()
-        except AttributeError:
+        except (AttributeError, ValueError):
             logging.debug(story + " is not a story")
-            pass
 
         if exitCode > 0:
             failedStories.append(story)
