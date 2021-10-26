@@ -23,10 +23,12 @@ class superStory:
             exitCode = 0
         except ActionFailed as e:
             logging.error(self.storyName + ": " + colorful.red("FAILED") + "\n" + str(e))
+            print(self.storyName + ": " + colorful.red("FAILED") + "\n" + str(e))
             exitCode = 1
             self.default.closeBrowser()
         except Exception:
             logging.exception(self.storyName + ": " + colorful.black("ERROR"))
+            print(self.storyName + ": " + colorful.black("ERROR"))
             self.default.closeBrowser()
         finally:
             return exitCode
