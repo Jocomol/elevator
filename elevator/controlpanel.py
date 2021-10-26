@@ -3,12 +3,14 @@ import argparse
 from os.path import isfile, join, isdir, abspath
 from os import listdir
 from importlib.machinery import SourceFileLoader
+import logging
 
 
 parser = argparse.ArgumentParser(description="WIP")
 parser.add_argument("-r", "--redo", help="redo failed stories", default=False, action="store_true")
 parser.add_argument("-S", "--shabbat", help="Shabbat mode; executes all stories", default=False, action="store_true")
 parser.add_argument("-s", "--stories", type=str, nargs="+", help="Path do to be executed stories", default="")
+parser.add_argument("-l", "--log", type=str, help="Path of log file", default="./elevator.log")
 
 
 def loadStories(paths):
@@ -44,20 +46,32 @@ def main():
     failedStories = []
     args = parser.parse_args()
     stories = []
+    logging.basicConfig(filename=args.log, filemode="w", level=logging.DEBUG)
+    logging.debug("Logging started")
     if args.shabbat:
         stories = loadStories(listdir("."))
+        logging.debug("Found files: " + str(stories))
     elif args.redo:
+        logging.debug("redo enabled")
         with open("/tmp/failedStories", "r") as f:
             for story in f.read().split(";"):
+                logging.debug("added story " + story + " to the to be executed stories")
                 stories.append(story)
     else:
+        logging.debug("Using: " + str(args.stories))
         stories = loadStories(args.stories)
+
+    logging.info("The following stories will be executed: " + str(stories))
+
     for story in stories:
         exitCode = 2
         try:
-            exitCode = SourceFileLoader("storyModule", abspath(story)).load_module().Story().test()
-        except AttributeError:
-            pass
+            logging.info("Started:" + story)
+            storyObject = SourceFileLoader("storyModule", abspath(story)).load_module().Story()
+            exitCode = storyObject.test()
+        except (AttributeError, ValueError):
+            logging.debug(story + " is not a story")
+
         if exitCode > 0:
             failedStories.append(story)
 
